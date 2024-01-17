@@ -1,6 +1,8 @@
 <script lang="ts">
 	import ChartCard from '$lib/components/chart-card.svelte';
 	import StatsCard from '$lib/components/stats-card.svelte';
+	import * as Card from '$lib/components/ui/card';
+	import RecentTxsTable from "$lib/components/recent-txs-table/table.svelte"
 	import { Vault, TrendingUp, DollarSign } from 'lucide-svelte';
 	import { AreaChart, ChartTheme, ScaleTypes } from '@carbon/charts-svelte';
 	import { mode } from "mode-watcher"
@@ -21,10 +23,10 @@
 	<StatsCard title="Total Value Locked" stat="$42,690" description="+20% from yesterday"
 		><Vault /></StatsCard
 	>
-	<StatsCard title="Revenue" stat="$5,432" description="+5% from yesterday"
+	<StatsCard title="24h Revenue" stat="$5,432" description="+5% from yesterday"
 		><DollarSign /></StatsCard
 	>
-	<StatsCard title="APY" stat="42%" description="+2% from yesterday"><TrendingUp /></StatsCard>
+	<StatsCard title="3d APY" stat="42%" description="+2% from yesterday"><TrendingUp /></StatsCard>
 </div>
 
 <ChartCard>
@@ -41,3 +43,14 @@
 		}}
 	/>
 </ChartCard>
+
+<Card.Root>
+	<Card.Header>
+		<Card.Title>
+			Recent Transactions
+		</Card.Title>
+	</Card.Header>
+	<Card.Content>
+		<RecentTxsTable />
+	</Card.Content>
+</Card.Root>

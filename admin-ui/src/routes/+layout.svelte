@@ -10,3 +10,9 @@
 		<slot />
 	</div>
 </div>
+
+<style lang='postcss'>
+	:global(.cds--cc--title p.title) {
+		@apply text-lg
+	}
+</style>
