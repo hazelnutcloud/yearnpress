@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { Sun, Moon } from 'lucide-svelte';
-	import { toggleMode, userPrefersMode, setMode } from 'mode-watcher';
+	import { toggleMode, userPrefersMode, setMode, mode } from 'mode-watcher';
 	import { onMount } from 'svelte';
 
 	onMount(() => {
@@ -9,9 +9,15 @@
 			setMode('dark');
 		}
 	});
+
+	// fix for weird bug where color mode doesn't update on some pages
+	const toggle = () => {
+		toggleMode();
+		$mode
+	};
 </script>
 
-<Button on:click={toggleMode} variant="ghost" size="icon">
+<Button on:click={toggle} variant="ghost" size="icon">
 	<Sun
 		class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
 	/>
