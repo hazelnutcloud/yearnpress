@@ -3,62 +3,55 @@
 	import { readable } from 'svelte/store';
 	import * as Table from '$lib/components/ui/table';
 
-	type Transaction =
-		| {
-				hash: string;
-				from: string;
-				to: string;
-				function: 'deposit' | 'withdraw';
-				amount: number;
-		  }
-		| {
-				hash: string;
-				from: string;
-				to: string;
-				function: 'rebalance';
-				amount?: never;
-		  };
+	type Vault = {
+		tvl: number;
+		apr: number;
+		chain: string;
+		tokenAddress: string;
+		tokenName: string;
+		vaultAddress: string;
+		vaultName: string;
+	};
 
-	const transactions: Transaction[] = [
+	const vaults: Vault[] = [
 		{
-			function: 'deposit',
-			amount: 100,
-			from: '0x1234',
-			to: '0x5678',
-			hash: '0x1234'
+			apr: 20,
+			chain: 'polygon',
+			tokenAddress: '0x1234',
+			tokenName: 'USDC',
+			tvl: 100,
+			vaultAddress: '0x1234',
+			vaultName: 'USDC Vault'
 		},
 		{
-			function: 'rebalance',
-			from: '0x1234',
-			hash: '0x1234',
-			to: '0x5678'
+			apr: 20,
+			chain: 'polygon',
+			tokenAddress: '0x1234',
+			tokenName: 'USDC',
+			tvl: 100,
+			vaultAddress: '0x1234',
+			vaultName: 'USDC Vault'
 		}
 	];
 
-	const table = createTable(readable(transactions));
+	const table = createTable(readable(vaults));
 
 	const columns = table.createColumns([
 		table.column({
-			accessor: 'hash',
-			header: 'Tx Hash'
+			accessor: 'vaultName',
+			header: 'Vault'
 		}),
 		table.column({
-			accessor: 'from',
-			header: 'From'
+			accessor: 'chain',
+			header: 'Chain'
 		}),
 		table.column({
-			accessor: 'to',
-			header: 'To'
+			accessor: 'apr',
+			header: 'APR'
 		}),
 		table.column({
-			accessor: 'function',
-			header: 'Function',
-			cell: ({ value }) => value.charAt(0).toUpperCase() + value.slice(1)
-		}),
-		table.column({
-			accessor: 'amount',
-			header: 'Amount',
-			cell: ({ value }) => value ?? '-'
+			accessor: 'tvl',
+			header: 'TVL'
 		})
 	]);
 
@@ -73,7 +66,7 @@
 					{#each headerRow.cells as cell (cell.id)}
 						<Subscribe attrs={cell.attrs()} let:attrs props={cell.props()}>
 							<Table.Head {...attrs}>
-								{#if cell.id === 'function' || cell.id === 'amount'}
+								{#if cell.id === 'apr' || cell.id === 'tvl'}
 									<div class="text-right">
 										<Render of={cell.render()} />
 									</div>
@@ -94,7 +87,7 @@
 					{#each row.cells as cell (cell.id)}
 						<Subscribe attrs={cell.attrs()} let:attrs>
 							<Table.Cell {...attrs}>
-								{#if cell.id === 'function' || cell.id === 'amount'}
+								{#if cell.id === 'apr' || cell.id === 'tvl'}
 									<div class="text-right">
 										<Render of={cell.render()} />
 									</div>

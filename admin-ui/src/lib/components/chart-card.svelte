@@ -3,7 +3,7 @@
 </script>
 
 <Card.Root>
-	<Card.Content class="pt-4">
+	<Card.Content class="pt-4 min-h-[300px]">
 			<slot />
 	</Card.Content>
 </Card.Root>

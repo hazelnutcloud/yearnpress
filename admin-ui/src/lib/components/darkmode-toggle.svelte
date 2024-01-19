@@ -1,7 +1,14 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { Sun, Moon } from 'lucide-svelte';
-	import { toggleMode } from 'mode-watcher';
+	import { toggleMode, userPrefersMode, setMode } from 'mode-watcher';
+	import { onMount } from 'svelte';
+
+	onMount(() => {
+		if ($userPrefersMode === 'system') {
+			setMode('dark');
+		}
+	});
 </script>
 
 <Button on:click={toggleMode} variant="ghost" size="icon">
